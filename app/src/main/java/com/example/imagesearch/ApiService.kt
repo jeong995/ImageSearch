@@ -5,6 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
+import java.io.Serializable
 
 data class SearchResponse(
     val documents: List<ImageResult>
@@ -19,7 +20,7 @@ data class ImageResult(
     val datetime: String,
     var check: Boolean = false
 
-)
+): Serializable
 
 interface ApiService {
     @Headers("Authorization: KakaoAK d313d114a3bc4acba390e0941d76b26a")

@@ -17,8 +17,13 @@ import java.util.Locale
 
 // recyclerview
 class ImageResultAdapter(
-    private val items: MutableList<ImageResult>
+    private val items: MutableList<ImageResult>,
+    private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<ImageResultAdapter.ViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val thumbnail: ImageView = view.findViewById(R.id.image_thumbnail)
@@ -54,6 +59,7 @@ class ImageResultAdapter(
             // SharedPreferences에 아이템 정보 저장하는 함수 호출
             saveItemInfoToSharedPreferences(holder.itemView.context, item)
             if (!item.check) holder.checkImage.visibility = View.VISIBLE
+            listener.onItemClick(position)
         }
     }
 
@@ -68,6 +74,7 @@ class ImageResultAdapter(
             context.getSharedPreferences("SelectedImageInfo", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         val itemsString = sharedPreferences.getString("items", "[]")
+        // json형태로 변환시켜야 함
         val jsonArray = JSONArray(itemsString)
         val jsonObject = JSONObject().apply {
             put("imageURL", item.thumbnailUrl)
@@ -79,7 +86,6 @@ class ImageResultAdapter(
         editor.putString("items", jsonArray.toString())
         editor.apply()
 
-        Toast.makeText(context, "아이템 저장되었습니다.", Toast.LENGTH_SHORT).show()
     }
 
     // update

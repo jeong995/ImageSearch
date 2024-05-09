@@ -1,20 +1,29 @@
 package com.example.imagesearch
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.imagesearch.databinding.FragmentFirstBinding
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.Locale
 
 class FirstFragment : Fragment() {
 
@@ -47,7 +56,12 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         // recyclerview 설정
-        adapter = ImageResultAdapter(mutableListOf())
+        adapter = ImageResultAdapter(mutableListOf(), object: ImageResultAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                // 뭘 적어야지?
+                Toast.makeText(context, "아이템을 저장하였습니다", Toast.LENGTH_SHORT).show()
+            }
+        })
         fragmentBinding.imageSearchRecyclerView.layoutManager = GridLayoutManager(context, 2)
         fragmentBinding.imageSearchRecyclerView.adapter = adapter
 

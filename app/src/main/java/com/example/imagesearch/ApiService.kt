@@ -23,7 +23,7 @@ data class ImageResult(
 ): Serializable
 
 interface ApiService {
-    @Headers("Authorization: KakaoAK d313d114a3bc4acba390e0941d76b26a")
+    @Headers("")
     @GET("v2/search/image")
     fun searchImages(@Query("query") query: String): Call<SearchResponse>
 }
